@@ -64,9 +64,9 @@ database.ref().on("child_added", function (childSnapshot) {
 
     // Store everything into a variable.
     var trainName = childSnapshot.val().name;
-    var destination = childSnapshot.val().role;
-    var firstTrain = childSnapshot.val().start;
-    var frequency = childSnapshot.val().rate;
+    var destination = childSnapshot.val().destination;
+    var firstTrain = childSnapshot.val().firstTrain;
+    var frequency = childSnapshot.val().frequency;
 
     // Train Info
     console.log(trainName);
@@ -79,11 +79,14 @@ database.ref().on("child_added", function (childSnapshot) {
 
     // Calculate the "months worked" using hardcore math
     //To calculate the "months worked"
-    var trMonths = moment().diff(moment(firstTrain, "X"), "HH:mm");
-    console.log(trMonths);
+    var diffTime = moment().diff(moment(firstTrain, "X"), "HH:mm");
+    console.log(firstTrain)
+    console.log(moment(firstTrain, "X"))
+    var diffTime = moment().diff(moment(firstTrain, "X"), "minutes");
+    console.log(diffTime);
 
     // Calculate the total "billed rate"
-    var trBilled = trMonths * frequency;
+    var trBilled = diffTime * frequency;
     console.log(trBilled);
 
     // Create the new row
