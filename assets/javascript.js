@@ -93,7 +93,7 @@ database.ref().on("child_added", function (childSnapshot) {
         $("<td>").text(firstTrainPretty),
         $("<td>").text("hello"),
         $("<td>").text(frequency),
-        // $("<td>").text(trBilled)
+        $("<td>").text(trBilled)
     );
     // Append the new row to the table
     $("#train-table > tbody").append(newRow);
