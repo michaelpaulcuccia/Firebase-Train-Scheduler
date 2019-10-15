@@ -60,41 +60,41 @@ $("#addTrain-btn").on("click", function (event) {
 
 // 3. Create Firebase event for adding employee to the database and a row in the html when a user adds an entry
 database.ref().on("child_added", function (childSnapshot) {
-            console.log(childSnapshot.val());
+    console.log(childSnapshot.val());
 
-            // Store everything into a variable.
-            var trainName = childSnapshot.val().name;
-            var destination = childSnapshot.val().role;
-            var firstTrain = childSnapshot.val().start;
-            var frequency = childSnapshot.val().rate;
+    // Store everything into a variable.
+    var trainName = childSnapshot.val().name;
+    var destination = childSnapshot.val().role;
+    var firstTrain = childSnapshot.val().start;
+    var frequency = childSnapshot.val().rate;
 
-            // Train Info
-            console.log(trainName);
-            console.log(destination);
-            console.log(firstTrain);
-            console.log(frequency);
+    // Train Info
+    console.log(trainName);
+    console.log(destination);
+    console.log(firstTrain);
+    console.log(frequency);
 
-            // Prettify the employee start
-            var firstTrainPretty = moment.unix(firstTrain).format("HH:mm");
+    // Prettify the employee start
+    var firstTrainPretty = moment.unix(firstTrain).format("HH:mm");
 
-            // Calculate the "months worked" using hardcore math
-            // To calculate the "months worked"
-            var trMonths = moment().diff(moment(firstTrain, "X"), "HH:mm");
-            console.log(trMonths);
+    // Calculate the "months worked" using hardcore math
+    //To calculate the "months worked"
+    var trMonths = moment().diff(moment(firstTrain, "X"), "HH:mm");
+    console.log(trMonths);
 
-            // Calculate the total "billed rate"
-            var trBilled = trMonths * frequency;
-            console.log(trBilled);
+    // Calculate the total "billed rate"
+    var trBilled = trMonths * frequency;
+    console.log(trBilled);
 
-            // Create the new row
-            var newRow = $("<tr>").append(
-                $("<td>").text(trainName),
-                $("<td>").text(destination),
-                $("<td>").text(firstTrainPretty),
-                $("<td>").text(trMonths),
-                $("<td>").text(frequency),
-                $("<td>").text(trBilled)
-            );
-        // Append the new row to the table
-  $("#train-table > tbody").append(newRow);
+    // Create the new row
+    var newRow = $("<tr>").append(
+        $("<td>").text(trainName),
+        $("<td>").text(destination),
+        $("<td>").text(firstTrainPretty),
+        $("<td>").text("hello"),
+        $("<td>").text(frequency),
+        // $("<td>").text(trBilled)
+    );
+    // Append the new row to the table
+    $("#train-table > tbody").append(newRow);
 });
