@@ -29,13 +29,12 @@ $("#addTrain-btn").on("click", function (event) {
     // Grabs user input
     var trainName = $("#trainName-input").val().trim();
     var destination = $("#destination-input").val().trim();
-    //var firstTrain = moment($("#firstTrain-input").val().trim(), "HH:mm").format("X");
     var firstTrain = $("#firstTrain-input").val().trim()
     firstTrain=(moment(firstTrain, "HH:mm").format("X"));
     var frequency = parseInt($("#frequency-input").val().trim());
     console.log(frequency)
 
-    // Creates local "temporary" object for holding TRAINS data
+    // Creates local "temporary" object for holding new Train data
     var newTrain = {
         name: trainName,
         destination: destination,
@@ -61,7 +60,7 @@ $("#addTrain-btn").on("click", function (event) {
     $("#frequency-input").val("");
 });
 
-// 3. Create Firebase event for adding employee to the database and a row in the html when a user adds an entry
+// 3. Create Firebase event for adding train to the database and a row in the html when a user adds an entry
 database.ref().on("child_added", function (childSnapshot) {
     console.log(childSnapshot.val());
 
@@ -77,14 +76,7 @@ database.ref().on("child_added", function (childSnapshot) {
     console.log(firstTrain);
     console.log(frequency);
 
-    // Prettify the employee start
-    // var firstTrainPretty = moment.unix(firstTrain).format("HH:mm");
-
-    // Calculate the "months worked" using hardcore math
-    //To calculate the "months worked"
-    // var diffTime = moment().diff(moment(firstTrain, "X"), "HH:mm");
-    // console.log(firstTrain)
-    // console.log(moment(firstTrain, "X").format("HH:MM"))
+   
     var diffTime = moment().diff(moment(firstTrain, "X"), "minutes");
     console.log(diffTime);
 
@@ -93,13 +85,15 @@ database.ref().on("child_added", function (childSnapshot) {
     var timeSinceLast= (diffTime%frequency)
     var timeTilNext = frequency-timeSinceLast;
     console.log(timeTilNext);
+    let nextArrival = moment().add(timeTilNext, 'minutes').format("HH:mm")
+    console.log(nextArrival);
 
     // Create the new row
     var newRow = $("<tr>").append(
         $("<td>").text(trainName),
         $("<td>").text(destination),
         $("<td>").text(frequency),
-        $("<td>").text(moment().add(timeTilNext, 'minutes').format("HH:MM")),
+        $("<td>").text(nextArrival),
         $("<td>").text(timeTilNext)
     );
     // Append the new row to the table
